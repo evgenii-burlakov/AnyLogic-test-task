@@ -1,5 +1,5 @@
 server:
-  port: 7878
+  port: 7543
 
 spring:
   jpa:

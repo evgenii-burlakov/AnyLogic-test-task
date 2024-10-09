@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: task-executor-service
+  cloud:
+    config:
+      fail-fast: true
+      profile: inMemory
