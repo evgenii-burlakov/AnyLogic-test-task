@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: task-manager-service
+  cloud:
+    config:
+      fail-fast: true
+      profile: inMemory

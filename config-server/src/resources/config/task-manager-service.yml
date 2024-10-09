@@ -1,0 +1,53 @@
+server:
+  port: 7878
+
+spring:
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+
+  #    show-sql: true
+
+  cloud:
+    config:
+      enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, logfile
+  endpoint:
+    health:
+      show-details: always
+  security:
+    enabled: false
+
+logging:
+  level:
+    ROOT: INFO
+
+---
+spring:
+  profiles: inMemory
+  datasource:
+    url: jdbc:h2:mem:testdb
+
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:H2Schema.sql
+---
+spring:
+  profiles: postgres
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/db
+    username: postgres
+    password: postgres
+
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:PostgresSchema.sql
