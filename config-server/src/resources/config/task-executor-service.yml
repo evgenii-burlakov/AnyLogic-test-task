@@ -12,17 +12,26 @@ spring:
     username: admin
     password: password
 
+task-executor-service:
+  listener:
+    concurrent-consumers: 5
+    max-concurrent-consumers: 10
+
 management:
   endpoints:
     web:
       exposure:
         include: health, metrics, logfile
   endpoint:
+    logfile:
+      external-file: /logs/application.log
     health:
       show-details: always
   security:
     enabled: false
 
 logging:
+  file:
+    name: logs/application.log
   level:
     ROOT: INFO

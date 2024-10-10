@@ -1,0 +1,161 @@
+{
+	"info": {
+		"_postman_id": "df4a6350-5453-4b26-956f-882669a4ab31",
+		"name": "AnyLogic-test-task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15784340"
+	},
+	"item": [
+		{
+			"name": "CalculateFactorial",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer AAIkNjY1YWY5NGUtMGM0ZS00ZTQxLWE1NTItNDRkYTM2NDY2MzU3WmpmTctTGvhDUJgnUf4_TuKCdTgQ2POOb5ItKo9HWYFkGV3sqtDHdBPe-SwED4LNCBL_c0kvVmM8oE6SR4k8_9Ox8nXIHYBDxO1ug2FkeOsgsefaXiVoPb_nY5K3mi7hAicbUY-o781M0MJkmeRwYA",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Content-Encoding",
+						"value": "gzip",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "value",
+							"value": "3",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:7878/api/calculateFactorial",
+					"host": [
+						"localhost"
+					],
+					"port": "7878",
+					"path": [
+						"api",
+						"calculateFactorial"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CalculateFactorial2",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer AAIkNjY1YWY5NGUtMGM0ZS00ZTQxLWE1NTItNDRkYTM2NDY2MzU3WmpmTctTGvhDUJgnUf4_TuKCdTgQ2POOb5ItKo9HWYFkGV3sqtDHdBPe-SwED4LNCBL_c0kvVmM8oE6SR4k8_9Ox8nXIHYBDxO1ug2FkeOsgsefaXiVoPb_nY5K3mi7hAicbUY-o781M0MJkmeRwYA",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Content-Encoding",
+						"value": "gzip",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "value",
+							"value": "15",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:7878/api/calculateFactorial",
+					"host": [
+						"localhost"
+					],
+					"port": "7878",
+					"path": [
+						"api",
+						"calculateFactorial"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "StopTask",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer AAIkNjY1YWY5NGUtMGM0ZS00ZTQxLWE1NTItNDRkYTM2NDY2MzU3WmpmTctTGvhDUJgnUf4_TuKCdTgQ2POOb5ItKo9HWYFkGV3sqtDHdBPe-SwED4LNCBL_c0kvVmM8oE6SR4k8_9Ox8nXIHYBDxO1ug2FkeOsgsefaXiVoPb_nY5K3mi7hAicbUY-o781M0MJkmeRwYA",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Content-Encoding",
+						"value": "gzip",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "0oa1l2tfqizASg5V70h8",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "SM7PyXEKoYCDLV0sppOMMB4u9nmTQVov9LgrTpUh",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "natera:pas_read",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:7878/api/task/1",
+					"host": [
+						"localhost"
+					],
+					"port": "7878",
+					"path": [
+						"api",
+						"task",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

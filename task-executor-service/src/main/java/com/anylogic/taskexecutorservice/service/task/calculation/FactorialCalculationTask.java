@@ -1,24 +1,21 @@
-package com.anylogic.taskexecutorservice.service.task.factorial;
+package com.anylogic.taskexecutorservice.service.task.calculation;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
-import java.util.concurrent.CompletableFuture;
 
 @Service
 @Slf4j
 public class FactorialCalculationTask implements CalculationTask {
 
-    @Async
     @Override
-    public CompletableFuture<BigInteger> execute(Long taskId, Integer value) {
+    public BigInteger execute(Long taskId, Integer value) {
         BigInteger result = BigInteger.ONE;
 
         for (int i = 1; i <= value; i++) {
             if (Thread.currentThread().isInterrupted()) {
-                System.out.println("Task interrupted, stopping...");
+                log.info("Task {} interrupted, stopping...", taskId);
                 break;
             }
 
@@ -27,11 +24,11 @@ public class FactorialCalculationTask implements CalculationTask {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                System.out.println("Task interrupted during sleep");
+                log.info("Task {} interrupted, stopping...", taskId);
                 break;
             }
         }
 
-        return CompletableFuture.completedFuture(result);
+        return result;
     }
 }

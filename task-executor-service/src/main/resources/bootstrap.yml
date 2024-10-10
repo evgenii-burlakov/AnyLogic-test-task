@@ -4,3 +4,8 @@ spring:
   cloud:
     config:
       fail-fast: true
+
+task-executor-service:
+  listener:
+    concurrent-consumers: 5
+    max-concurrent-consumers: 10

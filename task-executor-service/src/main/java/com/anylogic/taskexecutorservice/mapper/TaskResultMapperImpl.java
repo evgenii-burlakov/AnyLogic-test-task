@@ -19,4 +19,9 @@ public class TaskResultMapperImpl implements TaskResultMapper {
     public TaskResponseMessage convertToSuccessTaskResult(Long taskId, BigInteger result) {
         return TaskResponseMessage.builder().taskId(taskId).result(result).taskStatus(TaskStatus.FINISHED).build();
     }
+
+    @Override
+    public TaskResponseMessage convertToStoppedTaskResult(Long taskId) {
+        return TaskResponseMessage.builder().taskId(taskId).taskStatus(TaskStatus.STOPPED).build();
+    }
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.util.Map;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
@@ -14,6 +15,8 @@ import java.util.concurrent.Future;
 import java.util.function.Function;
 
 import static com.anylogic.taskexecutorservice.exception.ErrorConstants.TASK_ALREADY_EXIST;
+import static com.anylogic.taskexecutorservice.exception.ErrorConstants.TASK_WAS_CANCELLED;
+import static com.anylogic.taskexecutorservice.exception.ErrorConstants.TASK_WAS_INTERRUPTED;
 
 @Service
 @RequiredArgsConstructor
@@ -22,22 +25,31 @@ public class TaskManagerImpl implements TaskManager {
     private final Map<Long, Future<BigInteger>> tasks = new ConcurrentHashMap<>();
 
     @Override
-    public BigInteger submitTask(Long taskId, Function<Long, CompletableFuture<BigInteger>> taskFunction)
-            throws ExecutionException, InterruptedException {
+    public BigInteger submitTask(Long taskId, Function<Long, BigInteger> taskFunction) {
 
         if (tasks.containsKey(taskId)) {
             throw new ApplicationException(TASK_ALREADY_EXIST, taskId);
         }
 
-        CompletableFuture<BigInteger> future = taskFunction.apply(taskId);
+        CompletableFuture<BigInteger> future = CompletableFuture.supplyAsync(() ->
+                taskFunction.apply(taskId)
+        );
 
         tasks.put(taskId, future);
 
         future.thenRun(() -> tasks.remove(taskId));
 
-        log.info("Task {} has been submitted.", taskId);
+        log.info("Task {} has been submitted", taskId);
 
-        return future.get();
+        try {
+            return future.get();
+        } catch (CancellationException e) {
+            log.info("Task {} was cancelled", taskId);
+            throw new ApplicationException(e, TASK_WAS_CANCELLED, taskId);
+        } catch (InterruptedException | ExecutionException e) {
+            log.error("Task {} calculation was failed", taskId);
+            throw new ApplicationException(e, TASK_WAS_INTERRUPTED, taskId);
+        }
     }
 
     @Override
@@ -47,13 +59,13 @@ public class TaskManagerImpl implements TaskManager {
             boolean cancelled = future.cancel(true);
             if (cancelled) {
                 tasks.remove(taskId);
-                log.info("Task {} has been cancelled.", taskId);
+                log.info("Task {} has been cancelled", taskId);
             } else {
-                log.warn("Task {} could not be cancelled.", taskId);
+                log.warn("Task {} could not be cancelled", taskId);
             }
             return cancelled;
         }
-        log.warn("Task {} not found.", taskId);
+        log.warn("Task {} not found", taskId);
 
         return true;
     }

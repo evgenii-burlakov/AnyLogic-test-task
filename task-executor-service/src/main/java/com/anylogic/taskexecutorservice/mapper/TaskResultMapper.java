@@ -9,4 +9,6 @@ public interface TaskResultMapper {
     TaskResponseMessage convertToErrorTaskResult(Long taskId);
 
     TaskResponseMessage convertToSuccessTaskResult(Long taskId, BigInteger result);
+
+    TaskResponseMessage convertToStoppedTaskResult(Long taskId);
 }
