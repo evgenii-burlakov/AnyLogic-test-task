@@ -3,7 +3,9 @@ spring:
     name: task-executor-service
   cloud:
     config:
+      uri: ${SPRING_CLOUD_CONFIG_URI:http://localhost:8888}
       fail-fast: true
+      profile: ${SPRING_CLOUD_CONFIG_POFILE}
 
 task-executor-service:
   listener:

@@ -27,7 +27,8 @@ class FactorialTaskControllerTest {
 
     @Test
     void calculateFactorial() throws Exception {
-        given(factorialTaskService.calculateFactorial(3)).willReturn(FactorialResultDto.builder().result(BigInteger.valueOf(6)).build());
+        given(factorialTaskService.calculateFactorial(3)).willReturn(
+                FactorialResultDto.builder().result(BigInteger.valueOf(6)).build());
 
         mvc.perform(post("/api/calculateFactorial")
                         .param("value", "3"))

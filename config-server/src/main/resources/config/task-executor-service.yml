@@ -35,3 +35,13 @@ logging:
     name: logs/application.log
   level:
     ROOT: INFO
+
+---
+spring:
+  profiles: dockerCompose
+
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: admin
+    password: password

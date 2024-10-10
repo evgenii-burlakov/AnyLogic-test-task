@@ -30,7 +30,8 @@ class FactorialValidationServiceImplTest {
 
     @Test
     void validateCalculateFactorialNotThrowErrorForPositiveInt() {
-        assertThatCode(() -> factorialValidationService.validateCalculateFactorial(FACTORIAL_TASK_VALUE)).doesNotThrowAnyException();
+        assertThatCode(() -> factorialValidationService.validateCalculateFactorial(
+                FACTORIAL_TASK_VALUE)).doesNotThrowAnyException();
     }
 
     private static Stream<Arguments> invalidIntegers() {

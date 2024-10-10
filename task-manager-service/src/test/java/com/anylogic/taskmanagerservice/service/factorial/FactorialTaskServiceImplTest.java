@@ -1,9 +1,10 @@
 package com.anylogic.taskmanagerservice.service.factorial;
 
 
-import com.anylogic.taskmanagerservice.dto.FactorialResultDto;
+import com.anylogic.taskmanagerservice.dto.TaskResponseMessage;
 import com.anylogic.taskmanagerservice.dto.TaskType;
 import com.anylogic.taskmanagerservice.exception.ApplicationException;
+import com.anylogic.taskmanagerservice.mapper.factorial.FactorialMapper;
 import com.anylogic.taskmanagerservice.service.task.TaskService;
 import com.anylogic.taskmanagerservice.service.validation.factorial.FactorialValidationService;
 import org.junit.jupiter.api.Test;
@@ -32,10 +33,13 @@ class FactorialTaskServiceImplTest {
     @MockBean
     private FactorialValidationService factorialValidationService;
 
+    @MockBean
+    private FactorialMapper factorialMapper;
+
     @Test
     void calculateFactorial() {
         given(taskService.startTask(FACTORIAL_TASK_VALUE, TaskType.FACTORIAL)).willReturn(
-                FactorialResultDto.builder().result(FACTORIAL_TASK_RESULT).build());
+                TaskResponseMessage.builder().result(FACTORIAL_TASK_RESULT).build());
 
         var factorialResultDto = factorialTaskService.calculateFactorial(FACTORIAL_TASK_VALUE);
 
@@ -48,6 +52,7 @@ class FactorialTaskServiceImplTest {
         given(factorialValidationService.validateCalculateFactorial(FACTORIAL_INCORRECT_TASK_VALUE)).willThrow(
                 ApplicationException.class);
 
-        assertThatThrownBy(() -> factorialTaskService.calculateFactorial(FACTORIAL_INCORRECT_TASK_VALUE)).isInstanceOf(ApplicationException.class);
+        assertThatThrownBy(() -> factorialTaskService.calculateFactorial(FACTORIAL_INCORRECT_TASK_VALUE)).isInstanceOf(
+                ApplicationException.class);
     }
 }

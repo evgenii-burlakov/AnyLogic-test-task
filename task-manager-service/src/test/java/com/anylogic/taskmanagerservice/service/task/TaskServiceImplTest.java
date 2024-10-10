@@ -16,10 +16,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.math.BigInteger;
 import java.util.Optional;
 
-import static com.anylogic.taskmanagerservice.util.TestConstants.TASK_ID;
 import static com.anylogic.taskmanagerservice.util.TestConstants.FACTORIAL_TASK_VALUE;
+import static com.anylogic.taskmanagerservice.util.TestConstants.TASK_ID;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.BDDMockito.given;
 
 @SpringBootTest(classes = {TaskServiceImpl.class})
@@ -43,7 +44,8 @@ class TaskServiceImplTest {
     @Test
     void startTask() {
         var taskEntity = TaskEntityFixture.buildTaskEntity();
-        given(taskMapper.convertToTaskEntity(FACTORIAL_TASK_VALUE, TaskType.FACTORIAL, TaskStatus.CREATED)).willReturn(taskEntity);
+        given(taskMapper.convertToTaskEntity(FACTORIAL_TASK_VALUE, TaskType.FACTORIAL, TaskStatus.CREATED)).willReturn(
+                taskEntity);
         given(taskRepository.save(taskEntity)).willReturn(taskEntity);
 
 

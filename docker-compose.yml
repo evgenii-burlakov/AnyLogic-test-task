@@ -1,18 +1,17 @@
 version: "3.8"
 
 services:
-  db:
-    image: "mysql:8.0.27"
-    restart: "always"
-    ports:
-      - 3307:3306
+  postgres:
+    image: postgres:latest
+    container_name: postgres_db
     environment:
-      MYSQL_DATABASE: salesorderservice
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: password
-      MYSQL_ROOT_PASSWORD: password
+      POSTGRES_DB: db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
     volumes:
-      - db_data:/var/lib/mysql
+      - postgres_data:/var/lib/postgresql/data
 
   rabbitmq:
     image: "rabbitmq:3-management"
@@ -26,6 +25,37 @@ services:
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
 
+  config-server:
+    ports:
+      - 8888:8888
+    build:
+      context: ./config-server
+      dockerfile: Dockerfile
+
+  task-executor-service:
+    ports:
+      - 7543:7543
+    build:
+      context: ./task-executor-service
+      dockerfile: Dockerfile
+    environment:
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
+      - SPRING_CLOUD_CONFIG_POFILE=dockerCompose
+    depends_on:
+      - config-server
+      - rabbitmq
+
+  task-manager-service:
+    ports:
+      - 7878:7878
+    build:
+      context: ./task-manager-service
+      dockerfile: Dockerfile
+    depends_on:
+      - config-server
+      - postgres
+      - rabbitmq
+
 volumes:
-  db_data:
+  postgres_data:
   rabbitmq_data:

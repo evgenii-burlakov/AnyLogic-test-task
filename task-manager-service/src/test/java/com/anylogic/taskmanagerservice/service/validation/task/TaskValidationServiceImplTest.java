@@ -24,12 +24,14 @@ class TaskValidationServiceImplTest {
     @ParameterizedTest(name = "{index} {0}")
     @MethodSource("terminatedStatuses")
     void validateStopExecutionThrowError(TaskStatus taskStatus) {
-        assertThatThrownBy(() -> taskValidationService.validateStopExecution(TASK_ID, taskStatus)).isInstanceOf(ApplicationException.class);
+        assertThatThrownBy(() -> taskValidationService.validateStopExecution(TASK_ID, taskStatus)).isInstanceOf(
+                ApplicationException.class);
     }
 
     @Test
     void validateStopExecutionNotThrowErrorForCreatedState() {
-        assertThatCode(() -> taskValidationService.validateStopExecution(TASK_ID, TaskStatus.CREATED)).doesNotThrowAnyException();
+        assertThatCode(() -> taskValidationService.validateStopExecution(TASK_ID,
+                TaskStatus.CREATED)).doesNotThrowAnyException();
     }
 
     private static Stream<Arguments> terminatedStatuses() {
