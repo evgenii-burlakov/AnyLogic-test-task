@@ -1,7 +1,7 @@
 package com.anylogic.taskexecutorservice.service.task;
 
 import com.anylogic.taskexecutorservice.dto.TaskRequestMessage;
-import com.anylogic.taskexecutorservice.dto.TaskResultMessage;
+import com.anylogic.taskexecutorservice.dto.TaskResponseMessage;
 import com.anylogic.taskexecutorservice.dto.TaskType;
 import com.anylogic.taskexecutorservice.exception.ApplicationException;
 import com.anylogic.taskexecutorservice.mapper.TaskResultMapper;
@@ -24,7 +24,7 @@ public class TaskExecutorImpl implements TaskExecutor {
     private final TaskResultMapper taskResultMapper;
 
     @Override
-    public TaskResultMessage executeTask(TaskRequestMessage taskRequestMessage) {
+    public TaskResponseMessage executeTask(TaskRequestMessage taskRequestMessage) {
         if (TaskType.FACTORIAL.equals(taskRequestMessage.getTaskType())) {
             try {
                 Function<Long, CompletableFuture<BigInteger>> taskFunction =

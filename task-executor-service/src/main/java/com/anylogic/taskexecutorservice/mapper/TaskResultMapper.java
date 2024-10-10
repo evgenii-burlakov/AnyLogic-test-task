@@ -1,12 +1,12 @@
 package com.anylogic.taskexecutorservice.mapper;
 
-import com.anylogic.taskexecutorservice.dto.TaskResultMessage;
+import com.anylogic.taskexecutorservice.dto.TaskResponseMessage;
 
 import java.math.BigInteger;
 
 public interface TaskResultMapper {
 
-    TaskResultMessage convertToErrorTaskResult(Long taskId);
+    TaskResponseMessage convertToErrorTaskResult(Long taskId);
 
-    TaskResultMessage convertToSuccessTaskResult(Long taskId, BigInteger result);
+    TaskResponseMessage convertToSuccessTaskResult(Long taskId, BigInteger result);
 }

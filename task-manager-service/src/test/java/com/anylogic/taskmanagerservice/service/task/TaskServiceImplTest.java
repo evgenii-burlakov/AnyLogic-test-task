@@ -3,7 +3,7 @@ package com.anylogic.taskmanagerservice.service.task;
 import com.anylogic.taskmanagerservice.dto.TaskStatus;
 import com.anylogic.taskmanagerservice.dto.TaskType;
 import com.anylogic.taskmanagerservice.exception.ApplicationException;
-import com.anylogic.taskmanagerservice.mapper.TaskMapper;
+import com.anylogic.taskmanagerservice.mapper.task.TaskMapper;
 import com.anylogic.taskmanagerservice.repository.TaskRepository;
 import com.anylogic.taskmanagerservice.service.message.MessageSenderService;
 import com.anylogic.taskmanagerservice.service.validation.task.TaskValidationService;

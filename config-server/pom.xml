@@ -14,7 +14,7 @@
     <name>config-server</name>
     <description>config-server</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <spring-cloud.version>2021.0.1</spring-cloud.version>

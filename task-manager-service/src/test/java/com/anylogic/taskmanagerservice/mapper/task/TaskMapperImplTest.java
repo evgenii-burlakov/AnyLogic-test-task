@@ -1,4 +1,4 @@
-package com.anylogic.taskmanagerservice.mapper;
+package com.anylogic.taskmanagerservice.mapper.task;
 
 import com.anylogic.taskmanagerservice.dto.TaskStatus;
 import com.anylogic.taskmanagerservice.dto.TaskType;

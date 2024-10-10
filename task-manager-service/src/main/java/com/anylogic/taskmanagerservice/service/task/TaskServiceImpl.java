@@ -1,17 +1,15 @@
 package com.anylogic.taskmanagerservice.service.task;
 
-import com.anylogic.taskmanagerservice.dto.FactorialResultDto;
+import com.anylogic.taskmanagerservice.dto.TaskResponseMessage;
 import com.anylogic.taskmanagerservice.dto.TaskStatus;
 import com.anylogic.taskmanagerservice.dto.TaskType;
 import com.anylogic.taskmanagerservice.exception.ApplicationException;
-import com.anylogic.taskmanagerservice.mapper.TaskMapper;
+import com.anylogic.taskmanagerservice.mapper.task.TaskMapper;
 import com.anylogic.taskmanagerservice.repository.TaskRepository;
 import com.anylogic.taskmanagerservice.service.message.MessageSenderService;
 import com.anylogic.taskmanagerservice.service.validation.task.TaskValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.math.BigInteger;
 
 import static com.anylogic.taskmanagerservice.exception.ErrorConstants.TASK_NOT_FOUND;
 
@@ -25,12 +23,14 @@ public class TaskServiceImpl implements TaskService {
     private final MessageSenderService messageSenderService;
 
     @Override
-    public FactorialResultDto startTask(Integer value, TaskType taskType) {
+    public TaskResponseMessage startTask(Integer value, TaskType taskType) {
         var taskEntity = taskMapper.convertToTaskEntity(value, taskType, TaskStatus.CREATED);
-        taskRepository.save(taskEntity);
-//        messageSenderService.sendMessage();
+        var savedEntity = taskRepository.save(taskEntity);
+        var taskResultMessage = messageSenderService.sendMessage(taskMapper.convertToTaskRequestMessage(savedEntity));
 
-        return FactorialResultDto.builder().result(BigInteger.valueOf(7)).build();
+        savedEntity.setStatus(taskResultMessage.getTaskStatus());
+
+        return taskResultMessage;
     }
 
     @Override
@@ -39,7 +39,9 @@ public class TaskServiceImpl implements TaskService {
                 taskRepository.findById(taskId).orElseThrow(() -> new ApplicationException(TASK_NOT_FOUND, taskId));
 
         taskValidationService.validateStopExecution(taskEntity.getId(), taskEntity.getStatus());
-//        messageSenderService.sendMessage();
+        var taskResultMessage = messageSenderService.sendMessage(taskMapper.convertToTaskStopRequestMessage(taskId));
+
+        taskEntity.setStatus(taskResultMessage.getTaskStatus());
 
         return true;
     }

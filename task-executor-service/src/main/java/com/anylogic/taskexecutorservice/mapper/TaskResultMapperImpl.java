@@ -1,6 +1,6 @@
 package com.anylogic.taskexecutorservice.mapper;
 
-import com.anylogic.taskexecutorservice.dto.TaskResultMessage;
+import com.anylogic.taskexecutorservice.dto.TaskResponseMessage;
 import com.anylogic.taskexecutorservice.dto.TaskStatus;
 import org.springframework.stereotype.Component;
 
@@ -11,12 +11,12 @@ public class TaskResultMapperImpl implements TaskResultMapper {
 
 
     @Override
-    public TaskResultMessage convertToErrorTaskResult(Long taskId) {
-        return TaskResultMessage.builder().taskId(taskId).taskStatus(TaskStatus.ERROR).build();
+    public TaskResponseMessage convertToErrorTaskResult(Long taskId) {
+        return TaskResponseMessage.builder().taskId(taskId).taskStatus(TaskStatus.ERROR).build();
     }
 
     @Override
-    public TaskResultMessage convertToSuccessTaskResult(Long taskId, BigInteger result) {
-        return TaskResultMessage.builder().taskId(taskId).result(result).taskStatus(TaskStatus.FINISHED).build();
+    public TaskResponseMessage convertToSuccessTaskResult(Long taskId, BigInteger result) {
+        return TaskResponseMessage.builder().taskId(taskId).result(result).taskStatus(TaskStatus.FINISHED).build();
     }
 }

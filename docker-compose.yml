@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  db:
+    image: "mysql:8.0.27"
+    restart: "always"
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_DATABASE: salesorderservice
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - db_data:/var/lib/mysql
+
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    restart: "always"
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: password
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+volumes:
+  db_data:
+  rabbitmq_data:

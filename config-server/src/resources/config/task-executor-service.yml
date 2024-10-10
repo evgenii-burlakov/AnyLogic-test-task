@@ -2,16 +2,15 @@ server:
   port: 7543
 
 spring:
-  jpa:
-    generate-ddl: false
-    hibernate:
-      ddl-auto: none
-
-  #    show-sql: true
-
   cloud:
     config:
       enabled: false
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: password
 
 management:
   endpoints:
@@ -27,28 +26,3 @@ management:
 logging:
   level:
     ROOT: INFO
-
----
-spring:
-  profiles: inMemory
-  datasource:
-    url: jdbc:h2:mem:testdb
-
-  sql:
-    init:
-      mode: always
-      schema-locations: classpath:H2Schema.sql
-      data-locations: classpath:H2Data.sql
----
-spring:
-  profiles: postgres
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/db
-    username: postgres
-    password: postgres
-
-  sql:
-    init:
-      mode: always
-      schema-locations: classpath:PostgresSchema.sql

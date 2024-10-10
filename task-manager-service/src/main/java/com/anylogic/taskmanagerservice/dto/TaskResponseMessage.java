@@ -1,4 +1,4 @@
-package com.anylogic.taskexecutorservice.dto;
+package com.anylogic.taskmanagerservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,16 +7,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-public class TaskRequestMessage implements Serializable {
+public class TaskResponseMessage implements Serializable {
 
     private Long taskId;
-    private Integer value;
-    private TaskType taskType;
+    private BigInteger result;
     private TaskStatus taskStatus;
 }

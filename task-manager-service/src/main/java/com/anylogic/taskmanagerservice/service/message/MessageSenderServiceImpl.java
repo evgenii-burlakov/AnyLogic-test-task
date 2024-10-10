@@ -1,13 +1,32 @@
 package com.anylogic.taskmanagerservice.service.message;
 
-import com.anylogic.taskmanagerservice.entity.TaskEntity;
+import com.anylogic.taskmanagerservice.configuration.MessagingConfig;
+import com.anylogic.taskmanagerservice.dto.TaskRequestMessage;
+import com.anylogic.taskmanagerservice.dto.TaskResponseMessage;
+import com.anylogic.taskmanagerservice.exception.ApplicationException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.stereotype.Service;
 
+import static com.anylogic.taskmanagerservice.exception.ErrorConstants.INTERNAL_PROBLEM;
+
 @Service
+@RequiredArgsConstructor
 public class MessageSenderServiceImpl implements MessageSenderService {
 
+    private final AmqpTemplate amqpTemplate;
+    private final ObjectMapper objectMapper;
+
     @Override
-    public TaskEntity sendMessage(TaskEntity task) {
-        return null;
+    public TaskResponseMessage sendMessage(TaskRequestMessage request) {
+        String taskResultString =  (String) amqpTemplate.convertSendAndReceive(MessagingConfig.EXCHANGE, MessagingConfig.REQUEST_BINDING, request);
+
+        try {
+            return objectMapper.readValue(taskResultString, TaskResponseMessage.class);
+        } catch (JsonProcessingException e) {
+            throw new ApplicationException(INTERNAL_PROBLEM, request.getTaskId(), e);
+        }
     }
 }

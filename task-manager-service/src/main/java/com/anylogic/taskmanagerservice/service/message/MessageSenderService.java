@@ -1,8 +1,9 @@
 package com.anylogic.taskmanagerservice.service.message;
 
-import com.anylogic.taskmanagerservice.entity.TaskEntity;
+import com.anylogic.taskmanagerservice.dto.TaskRequestMessage;
+import com.anylogic.taskmanagerservice.dto.TaskResponseMessage;
 
 public interface MessageSenderService {
 
-    TaskEntity sendMessage(TaskEntity task);
+    TaskResponseMessage sendMessage(TaskRequestMessage request);
 }

@@ -1,11 +1,11 @@
 package com.anylogic.taskmanagerservice.service.task;
 
-import com.anylogic.taskmanagerservice.dto.FactorialResultDto;
+import com.anylogic.taskmanagerservice.dto.TaskResponseMessage;
 import com.anylogic.taskmanagerservice.dto.TaskType;
 
 public interface TaskService {
 
-    FactorialResultDto startTask(Integer value, TaskType taskType);
+    TaskResponseMessage startTask(Integer value, TaskType taskType);
 
     boolean stopTask(Long taskId);
 }
