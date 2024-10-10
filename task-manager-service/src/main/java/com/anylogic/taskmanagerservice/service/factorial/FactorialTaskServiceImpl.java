@@ -26,9 +26,10 @@ public class FactorialTaskServiceImpl implements FactorialTaskService {
         var taskResultMessage = taskService.startTask(value, TaskType.FACTORIAL);
 
         if (taskResultMessage.getTaskStatus() != TaskStatus.FINISHED) {
-            throw new ApplicationException(TASK_NOT_EXECUTED, taskResultMessage.getTaskId(), taskResultMessage.getTaskStatus());
+            throw new ApplicationException(TASK_NOT_EXECUTED, taskResultMessage.getTaskId(),
+                    taskResultMessage.getTaskStatus());
         }
 
-        return  factorialMapper.convertToFactorialResultDto(taskResultMessage);
+        return factorialMapper.convertToFactorialResultDto(taskResultMessage);
     }
 }

@@ -9,13 +9,14 @@ import com.anylogic.taskexecutorservice.mapper.TaskResultMapper;
 import com.anylogic.taskexecutorservice.service.task.calculation.FactorialCalculationTask;
 import com.anylogic.taskexecutorservice.service.task.manager.TaskManager;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
-import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class TaskExecutorImpl implements TaskExecutor {
 
@@ -25,6 +26,10 @@ public class TaskExecutorImpl implements TaskExecutor {
 
     @Override
     public TaskResponseMessage executeTask(TaskRequestMessage taskRequestMessage) {
+        log.info("Task {} with status {} has been received",
+                taskRequestMessage.getTaskId(),
+                taskRequestMessage.getTaskStatus());
+
         if (TaskStatus.STOPPED.equals(taskRequestMessage.getTaskStatus())) {
             taskManager.stopTask(taskRequestMessage.getTaskId());
             return taskResultMapper.convertToStoppedTaskResult(taskRequestMessage.getTaskId());

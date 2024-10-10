@@ -7,7 +7,7 @@ import com.anylogic.taskmanagerservice.entity.TaskEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TaskMapperImpl implements TaskMapper{
+public class TaskMapperImpl implements TaskMapper {
     public TaskEntity convertToTaskEntity(Integer value, TaskType taskType, TaskStatus taskStatus) {
         var taskEntity = new TaskEntity();
         taskEntity.setValue(value);
@@ -19,7 +19,8 @@ public class TaskMapperImpl implements TaskMapper{
 
     @Override
     public TaskRequestMessage convertToTaskRequestMessage(TaskEntity taskEntity) {
-        return TaskRequestMessage.builder().taskId(taskEntity.getId()).value(taskEntity.getValue()).taskType(taskEntity.getType()).taskStatus(taskEntity.getStatus()).build();
+        return TaskRequestMessage.builder().taskId(taskEntity.getId()).value(taskEntity.getValue())
+                .taskType(taskEntity.getType()).taskStatus(taskEntity.getStatus()).build();
     }
 
     @Override

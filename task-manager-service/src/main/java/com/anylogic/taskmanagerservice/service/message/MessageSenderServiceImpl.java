@@ -8,11 +8,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.core.MessageBuilder;
-import org.springframework.amqp.rabbit.AsyncRabbitTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.util.concurrent.ListenableFuture;
 
 import static com.anylogic.taskmanagerservice.exception.ErrorConstants.INTERNAL_PROBLEM;
 
@@ -27,7 +23,8 @@ public class MessageSenderServiceImpl implements MessageSenderService {
     public TaskResponseMessage sendMessage(TaskRequestMessage request) {
 
         try {
-            String  taskResultString = (String) amqpTemplate.convertSendAndReceive(MessagingConfig.EXCHANGE, MessagingConfig.REQUEST_BINDING, request);
+            String taskResultString = (String) amqpTemplate.convertSendAndReceive(MessagingConfig.EXCHANGE,
+                    MessagingConfig.REQUEST_BINDING, request);
             return objectMapper.readValue(taskResultString, TaskResponseMessage.class);
         } catch (JsonProcessingException e) {
             throw new ApplicationException(INTERNAL_PROBLEM, request.getTaskId(), e);

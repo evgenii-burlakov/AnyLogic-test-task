@@ -11,7 +11,7 @@ public class TaskValidationServiceImpl implements TaskValidationService {
 
     @Override
     public boolean validateStopExecution(Long taskId, TaskStatus taskStatus) {
-        switch(taskStatus) {
+        switch (taskStatus) {
             case STOPPED, ERROR, FINISHED -> throw new ApplicationException(TASK_NOT_EXECUTED, taskId, taskStatus);
             default -> {
                 return true;

@@ -5,3 +5,7 @@ spring:
     config:
       fail-fast: true
       profile: inMemory
+
+task-manager-service:
+  messaging:
+    timeout: 50000

@@ -18,6 +18,10 @@ spring:
     config:
       enabled: false
 
+task-manager-service:
+  messaging:
+    timeout: 50000
+
 management:
   endpoints:
     web:

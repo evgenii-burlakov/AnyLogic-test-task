@@ -8,6 +8,8 @@ import com.anylogic.taskmanagerservice.entity.TaskEntity;
 public interface TaskMapper {
 
     TaskEntity convertToTaskEntity(Integer value, TaskType taskType, TaskStatus taskStatus);
+
     TaskRequestMessage convertToTaskRequestMessage(TaskEntity taskEntity);
+
     TaskRequestMessage convertToTaskStopRequestMessage(Long taskId);
 }
