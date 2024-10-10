@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 
-import static com.anylogic.taskmanagerservice.dto.ErrorConstants.TASK_NOT_FOUND;
+import static com.anylogic.taskmanagerservice.exception.ErrorConstants.TASK_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor

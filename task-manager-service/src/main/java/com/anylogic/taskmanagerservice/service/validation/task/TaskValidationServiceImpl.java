@@ -4,7 +4,7 @@ import com.anylogic.taskmanagerservice.dto.TaskStatus;
 import com.anylogic.taskmanagerservice.exception.ApplicationException;
 import org.springframework.stereotype.Service;
 
-import static com.anylogic.taskmanagerservice.dto.ErrorConstants.TASK_NOT_EXECUTED;
+import static com.anylogic.taskmanagerservice.exception.ErrorConstants.TASK_NOT_EXECUTED;
 
 @Service
 public class TaskValidationServiceImpl implements TaskValidationService {

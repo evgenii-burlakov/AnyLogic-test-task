@@ -11,8 +11,8 @@
     <groupId>com.anylogic</groupId>
     <artifactId>config-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Config server</name>
-    <description>Config server</description>
+    <name>config-server</name>
+    <description>config-server</description>
     <properties>
         <java.version>11</java.version>
         <maven.compiler.source>11</maven.compiler.source>
