@@ -1,6 +1,7 @@
 package com.anylogic.taskmanagerservice.mapper.task;
 
 import com.anylogic.taskmanagerservice.dto.TaskRequestMessage;
+import com.anylogic.taskmanagerservice.dto.TaskResponseMessage;
 import com.anylogic.taskmanagerservice.dto.TaskStatus;
 import com.anylogic.taskmanagerservice.dto.TaskType;
 import com.anylogic.taskmanagerservice.entity.TaskEntity;
@@ -26,5 +27,11 @@ public class TaskMapperImpl implements TaskMapper {
     @Override
     public TaskRequestMessage convertToTaskStopRequestMessage(Long taskId) {
         return TaskRequestMessage.builder().taskId(taskId).taskStatus(TaskStatus.STOPPED).build();
+    }
+
+    @Override
+    public TaskResponseMessage convertToTaskResponseMessage(TaskEntity taskEntity) {
+        return TaskResponseMessage.builder().taskId(taskEntity.getId()).taskStatus(taskEntity.getStatus())
+                .build();
     }
 }

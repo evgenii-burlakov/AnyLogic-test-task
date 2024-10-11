@@ -11,6 +11,8 @@ import com.anylogic.taskmanagerservice.service.validation.task.TaskValidationSer
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 import static com.anylogic.taskmanagerservice.exception.ErrorConstants.TASK_NOT_FOUND;
 
 @Service
@@ -28,9 +30,11 @@ public class TaskServiceImpl implements TaskService {
         var savedEntity = taskRepository.save(taskEntity);
         var taskResultMessage = messageSenderService.sendMessage(taskMapper.convertToTaskRequestMessage(savedEntity));
 
-        savedEntity.setStatus(taskResultMessage.getTaskStatus());
+        Optional.ofNullable(taskResultMessage).map(TaskResponseMessage::getTaskStatus)
+                .ifPresent(
+                        s -> taskRepository.updateTaskStatus(savedEntity.getId(), taskResultMessage.getTaskStatus()));
 
-        return taskResultMessage;
+        return Optional.ofNullable(taskResultMessage).orElse(taskMapper.convertToTaskResponseMessage(savedEntity));
     }
 
     @Override
@@ -41,7 +45,8 @@ public class TaskServiceImpl implements TaskService {
         taskValidationService.validateStopExecution(taskEntity.getId(), taskEntity.getStatus());
         var taskResultMessage = messageSenderService.sendMessage(taskMapper.convertToTaskStopRequestMessage(taskId));
 
-        taskEntity.setStatus(taskResultMessage.getTaskStatus());
+        Optional.ofNullable(taskResultMessage).map(TaskResponseMessage::getTaskStatus)
+                .ifPresent(s -> taskRepository.updateTaskStatus(taskId, taskResultMessage.getTaskStatus()));
 
         return true;
     }

@@ -1,6 +1,7 @@
 package com.anylogic.taskmanagerservice.mapper.task;
 
 import com.anylogic.taskmanagerservice.dto.TaskRequestMessage;
+import com.anylogic.taskmanagerservice.dto.TaskResponseMessage;
 import com.anylogic.taskmanagerservice.dto.TaskStatus;
 import com.anylogic.taskmanagerservice.dto.TaskType;
 import com.anylogic.taskmanagerservice.entity.TaskEntity;
@@ -12,4 +13,6 @@ public interface TaskMapper {
     TaskRequestMessage convertToTaskRequestMessage(TaskEntity taskEntity);
 
     TaskRequestMessage convertToTaskStopRequestMessage(Long taskId);
+
+    TaskResponseMessage convertToTaskResponseMessage(TaskEntity taskEntity);
 }

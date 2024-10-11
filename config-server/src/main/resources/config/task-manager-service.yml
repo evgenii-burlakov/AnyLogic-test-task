@@ -64,3 +64,22 @@ spring:
     init:
       mode: always
       schema-locations: classpath:PostgresSchema.sql
+---
+spring:
+  profiles: dockerCompose
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://postgres:5432/db
+    username: postgres
+    password: postgres
+
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: admin
+    password: password
+
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:PostgresSchema.sql
