@@ -14,6 +14,5 @@
         <module>config-server</module>
         <module>task-manager-service</module>
         <module>task-executor-service</module>
-        <module>task-executor-service</module>
     </modules>
 </project>

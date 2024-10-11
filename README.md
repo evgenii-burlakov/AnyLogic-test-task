@@ -10,11 +10,14 @@
 Возможно следующие варианты запуска:
 1) Через docker-compose файл в корне проекта
 2) Запуск через средства сборки/IDE:
-- Запустить config-server
+- Запустить config-server _(**mvn spring-boot:run** из корня модуля)_
 - Запустить RabbitMQ (например, из docker-compose)
-- Запустить task-manager-service (по умолчанию он использует H2 DB, для переключения на Postgres следует указать в 
-bootstrap.yml профиль **postgres** и переключить профиль Maven на **postgres**). При запуске на Postgres следует предварительно запустить Postgres (например, из docker-compose)
-- Запустить task-executor-service
+- Запустить task-manager-service (**mvn spring-boot:run -Dspring-boot.run.profiles=h2** из корня модуля) (по умолчанию он использует H2 DB, для переключения на Postgres следует указать в 
+bootstrap.yml профиль **postgres** и переключить профиль Maven на **postgres**, далее **mvn spring-boot:run -Dspring-boot.run.profiles=postgres** из корня модуля). При запуске на Postgres следует предварительно запустить Postgres (например, из docker-compose).
+- Запустить task-executor-service _(**mvn spring-boot:run** из корня модуля)_
+
+Важно:
+при переключении с одного профиля Maven на другой (для смены DB) надо пересобрать проект Maven, чтобы он подтянул зависимости из нового профиля. 
 
 ## API
 Доступны следующие эндпоинты (коллекция находится в **postmancollection** в корне проекта):
