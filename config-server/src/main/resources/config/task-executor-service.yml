@@ -21,18 +21,14 @@ management:
   endpoints:
     web:
       exposure:
-        include: health, metrics, logfile
+        include: health, metrics
   endpoint:
-    logfile:
-      external-file: /logs/application.log
     health:
       show-details: always
   security:
     enabled: false
 
 logging:
-  file:
-    name: logs/application.log
   level:
     ROOT: INFO
 

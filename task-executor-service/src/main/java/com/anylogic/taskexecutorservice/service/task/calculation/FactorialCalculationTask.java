@@ -1,9 +1,12 @@
 package com.anylogic.taskexecutorservice.service.task.calculation;
 
+import com.anylogic.taskexecutorservice.exception.ApplicationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
+
+import static com.anylogic.taskexecutorservice.exception.ErrorConstants.FACTORIAL_INCORRECT_VALUE;
 
 @Service
 @Slf4j
@@ -12,6 +15,10 @@ public class FactorialCalculationTask implements CalculationTask {
     @Override
     public BigInteger execute(Long taskId, Integer value) {
         BigInteger result = BigInteger.ONE;
+
+        if (value < 0) {
+            throw new ApplicationException(FACTORIAL_INCORRECT_VALUE, taskId, value);
+        }
 
         for (int i = 1; i <= value; i++) {
             if (Thread.currentThread().isInterrupted()) {

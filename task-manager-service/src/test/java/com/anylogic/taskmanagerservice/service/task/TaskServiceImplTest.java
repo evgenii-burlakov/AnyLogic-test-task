@@ -1,5 +1,6 @@
 package com.anylogic.taskmanagerservice.service.task;
 
+import com.anylogic.taskmanagerservice.dto.TaskResponseMessage;
 import com.anylogic.taskmanagerservice.dto.TaskStatus;
 import com.anylogic.taskmanagerservice.dto.TaskType;
 import com.anylogic.taskmanagerservice.exception.ApplicationException;
@@ -13,14 +14,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.math.BigInteger;
 import java.util.Optional;
 
+import static com.anylogic.taskmanagerservice.util.TestConstants.FACTORIAL_TASK_RESULT;
 import static com.anylogic.taskmanagerservice.util.TestConstants.FACTORIAL_TASK_VALUE;
 import static com.anylogic.taskmanagerservice.util.TestConstants.TASK_ID;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
 @SpringBootTest(classes = {TaskServiceImpl.class})
@@ -47,11 +49,12 @@ class TaskServiceImplTest {
         given(taskMapper.convertToTaskEntity(FACTORIAL_TASK_VALUE, TaskType.FACTORIAL, TaskStatus.CREATED)).willReturn(
                 taskEntity);
         given(taskRepository.save(taskEntity)).willReturn(taskEntity);
-
+        given(messageSenderService.sendMessage(any())).willReturn(
+                TaskResponseMessage.builder().result(FACTORIAL_TASK_RESULT).build());
 
         var factorialResultDto = taskService.startTask(FACTORIAL_TASK_VALUE, TaskType.FACTORIAL);
 
-        assertEquals(factorialResultDto.getResult(), BigInteger.valueOf(7));
+        assertEquals(factorialResultDto.getResult(), FACTORIAL_TASK_RESULT);
     }
 
     @Test

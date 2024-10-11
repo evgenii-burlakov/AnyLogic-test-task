@@ -1,7 +1,9 @@
 package com.anylogic.taskmanagerservice.service.factorial;
 
 
+import com.anylogic.taskmanagerservice.dto.FactorialResultDto;
 import com.anylogic.taskmanagerservice.dto.TaskResponseMessage;
+import com.anylogic.taskmanagerservice.dto.TaskStatus;
 import com.anylogic.taskmanagerservice.dto.TaskType;
 import com.anylogic.taskmanagerservice.exception.ApplicationException;
 import com.anylogic.taskmanagerservice.mapper.factorial.FactorialMapper;
@@ -38,8 +40,13 @@ class FactorialTaskServiceImplTest {
 
     @Test
     void calculateFactorial() {
+        var taskResponseMessage =
+                TaskResponseMessage.builder().taskStatus(TaskStatus.FINISHED).result(FACTORIAL_TASK_RESULT).build();
         given(taskService.startTask(FACTORIAL_TASK_VALUE, TaskType.FACTORIAL)).willReturn(
-                TaskResponseMessage.builder().result(FACTORIAL_TASK_RESULT).build());
+                taskResponseMessage);
+        given(factorialMapper.convertToFactorialResultDto(taskResponseMessage)).willReturn(
+                FactorialResultDto.builder().result(taskResponseMessage.getResult())
+                        .build());
 
         var factorialResultDto = factorialTaskService.calculateFactorial(FACTORIAL_TASK_VALUE);
 

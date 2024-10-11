@@ -9,6 +9,7 @@ import com.anylogic.taskmanagerservice.repository.TaskRepository;
 import com.anylogic.taskmanagerservice.service.message.MessageSenderService;
 import com.anylogic.taskmanagerservice.service.validation.task.TaskValidationService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,6 +17,7 @@ import java.util.Optional;
 import static com.anylogic.taskmanagerservice.exception.ErrorConstants.TASK_NOT_FOUND;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService {
 
@@ -39,6 +41,8 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public boolean stopTask(Long taskId) {
+        log.info("Stop task operation for task with id {} has begun", taskId);
+
         var taskEntity =
                 taskRepository.findById(taskId).orElseThrow(() -> new ApplicationException(TASK_NOT_FOUND, taskId));
 
@@ -47,6 +51,8 @@ public class TaskServiceImpl implements TaskService {
 
         Optional.ofNullable(taskResultMessage).map(TaskResponseMessage::getTaskStatus)
                 .ifPresent(s -> taskRepository.updateTaskStatus(taskId, taskResultMessage.getTaskStatus()));
+
+        log.info("Stop task operation has been completed for task with id {} ", taskId);
 
         return true;
     }

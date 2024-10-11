@@ -7,12 +7,15 @@ import com.anylogic.taskmanagerservice.exception.ApplicationException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.stereotype.Service;
 
+import static com.anylogic.taskmanagerservice.configuration.MessagingConfig.REQUEST_QUEUE;
 import static com.anylogic.taskmanagerservice.exception.ErrorConstants.INTERNAL_PROBLEM;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class MessageSenderServiceImpl implements MessageSenderService {
 
@@ -21,8 +24,8 @@ public class MessageSenderServiceImpl implements MessageSenderService {
 
     @Override
     public TaskResponseMessage sendMessage(TaskRequestMessage request) {
-
         try {
+            log.info("Sending message {} to queue {}", request, REQUEST_QUEUE);
             String taskResultString = (String) amqpTemplate.convertSendAndReceive(MessagingConfig.EXCHANGE,
                     MessagingConfig.REQUEST_BINDING, request);
             return objectMapper.readValue(taskResultString, TaskResponseMessage.class);
